@@ -16,7 +16,9 @@ let quotes = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY)) || [
   },
 ];
 
-// Function to populate categories dynamically
+const lastSelectedCategory = localStorage.getItem("selectedCategory") || "all";
+
+// Function to populate the category dropdown dynamically
 function populateCategories() {
   const categoryFilter = document.getElementById("categoryFilter");
   categoryFilter.innerHTML = `<option value="all">All Categories</option>`;
@@ -29,6 +31,8 @@ function populateCategories() {
     option.textContent = category;
     categoryFilter.appendChild(option);
   });
+
+  categoryFilter.value = lastSelectedCategory;
 }
 
 // Function to filter and display a random quote
@@ -101,8 +105,8 @@ async function syncWithServer(newQuote) {
   }
 }
 
-// Function to fetch updated quotes from the server
-async function fetchFromServer() {
+// Function to fetch quotes from the server
+async function fetchQuotesFromServer() {
   try {
     const response = await fetch(SERVER_URL);
     const serverQuotes = await response.json();
@@ -111,7 +115,7 @@ async function fetchFromServer() {
       mergeQuotes(serverQuotes);
     }
   } catch (error) {
-    console.error("Error fetching from server:", error);
+    console.error("Error fetching quotes from server:", error);
   }
 }
 
@@ -139,7 +143,7 @@ function mergeQuotes(serverQuotes) {
 }
 
 // Periodic sync with the server
-setInterval(fetchFromServer, SYNC_INTERVAL);
+setInterval(fetchQuotesFromServer, SYNC_INTERVAL);
 
 // Event listener for "Show New Quote" button
 document.getElementById("newQuote").addEventListener("click", filterQuotes);
