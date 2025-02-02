@@ -81,7 +81,7 @@ function addQuote() {
   saveQuotes();
   populateCategories();
   filterQuotes();
-  syncWithServer(newQuote);
+  syncQuotes(newQuote);
 
   document.getElementById("newQuoteText").value = "";
   document.getElementById("newQuoteCategory").value = "";
@@ -92,8 +92,8 @@ function saveQuotes() {
   localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(quotes));
 }
 
-// Function to sync with the server
-async function syncWithServer(newQuote) {
+// Function to sync quotes with the server
+async function syncQuotes(newQuote) {
   try {
     await fetch(SERVER_URL, {
       method: "POST",
