@@ -100,6 +100,7 @@ async function syncQuotes(newQuote) {
       body: JSON.stringify(newQuote),
       headers: { "Content-Type": "application/json" },
     });
+    console.log("Quotes synced with server!");
   } catch (error) {
     console.error("Error syncing with server:", error);
   }
