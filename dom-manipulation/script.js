@@ -46,7 +46,7 @@ function filterQuotes() {
   displayQuotes(filteredQuotes);
 }
 
-// Function to display quotes
+// Function to display a random quote from filtered results
 function displayQuotes(filteredQuotes) {
   const quoteDisplay = document.getElementById("quoteDisplay");
   quoteDisplay.innerHTML = "";
@@ -56,11 +56,10 @@ function displayQuotes(filteredQuotes) {
     return;
   }
 
-  filteredQuotes.forEach((quote) => {
-    const quoteElement = document.createElement("p");
-    quoteElement.innerHTML = `${quote.text} <strong>(${quote.category})</strong>`;
-    quoteDisplay.appendChild(quoteElement);
-  });
+  const randomIndex = Math.floor(Math.random() * filteredQuotes.length);
+  const randomQuote = filteredQuotes[randomIndex];
+
+  quoteDisplay.innerHTML = `<p>${randomQuote.text} <strong>(${randomQuote.category})</strong></p>`;
 }
 
 // Function to add a new quote dynamically
